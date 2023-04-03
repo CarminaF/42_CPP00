@@ -2,15 +2,7 @@
 
 char *make_upper(char *str)
 {
-    int len = 0;
-
-    if (!str)
-        return (NULL);
-    while (str[len] != '\0')
-    {
-        len++;
-    }
-    for (int i = 0; i < len; i++)
+    for (int i = 0; i < std::strlen(str); i++)
     {
         str[i] = std::toupper(str[i]);
     }
