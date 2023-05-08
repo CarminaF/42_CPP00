@@ -1,8 +1,8 @@
 #include <iostream>
 
 std::string make_upper(std::string str) {
-    for (int i = 0; i < str.length(); i++) {
-        str[i] = std::toupper(str[i]);
+    for (std::string::iterator i = str.begin(); i < str.end(); i++) {
+        *i = std::toupper(*i);
     }
     return (str);
 }

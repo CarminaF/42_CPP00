@@ -5,7 +5,8 @@
 class PhoneBook {
     private:
         Contact contacts[8];
-        void    display_phone_book();
+        //int     count;
+        void    displayPhoneBook();
         
     public:
         void    add();

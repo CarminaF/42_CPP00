@@ -1,6 +1,6 @@
 #include <iostream>
-#include "Contact.hpp"
-#include "PhoneBook.hpp"
+#include "../includes/Contact.hpp"
+#include "../includes/PhoneBook.hpp"
 
 // Returns capitalized string without trailing white spaces
 std::string format(std::string str) {
@@ -41,16 +41,16 @@ int main(void) {
         std::cout << "Enter any of the commands above: ";
         std::cin >> command;
         command = format(command);
-        if (command == "ADD") {
+        if (command == "ADD") 
             carminasPhoneBook.add();
-        }
-        else if (command == "SEARCH") {
+        else if (command == "SEARCH") 
             carminasPhoneBook.search();
-        }
         else if (command == "EXIT") {
+            std::cout << "Exit min" << std::endl;
             carminasPhoneBook.exit();
             break;
         }
         std::cout << std::endl;
     }
+    return (0);
 }
