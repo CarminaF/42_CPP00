@@ -3,20 +3,22 @@
 #include "../includes/PhoneBook.hpp"
 
 // Returns capitalized string without trailing white spaces
-std::string format(std::string str) {
-    int i = 0;
-    int j = 0;
+std::string format_command(std::string &str) {
+    std::size_t start;
+    std::size_t end;
 
-    while (std::isspace(str[i])) {
-        i++;
+    if (str.empty()) {
+        std::cout<< "empty";
+        return str;
     }
-    while (!std::isspace(str[i])) {
-        str[j] = std::toupper(str[i]);
-        i++;
-        j++;
+    start = str.find_first_not_of(" \t\n\r\f\v");
+    if (start == std::string::npos) {
+        return str;
     }
-    str[j] = '\n';
-    return (str);
+    end = str.find_last_not_of(" \t\n\r\f\v");
+    std::string substr = str.substr(start, end - start + 1);
+    std::transform(substr.begin(), substr.end(), substr.begin(), ::toupper);
+    return substr;
 }
 
 int main(void) {
@@ -28,24 +30,28 @@ int main(void) {
     std::cout << " / ___/ _  / /_/ /    / _// _  / /_/ / /_/ / ,<   " << std::endl;
     std::cout << "/_/  /_//_/\\____/_/|_/___/____/\\____/\\____/_/|_|" << std::endl;
     std::cout << std::endl;
-    while (1){ 
+    while (true){ 
         std::string command;
         PhoneBook carminasPhoneBook;
 
         std::cout << "************************************************" << std::endl;
-        std::cout << " 'ADD'    - to add a new contact to phone book" << std::endl;
-        std::cout << " 'SEARCH' - to lookup contact in phone book" << std::endl;
-        std::cout << " 'EXIT'   - to exit phone book" << std::endl;
+        std::cout << " 1 - 'ADD'    - to add a new contact to phone book" << std::endl;
+        std::cout << " 2 - 'SEARCH' - to lookup contact in phone book" << std::endl;
+        std::cout << " 3 - 'EXIT'   - to exit phone book" << std::endl;
         std::cout << "************************************************" << std::endl;
         std::cout << std::endl;
         std::cout << "Enter any of the commands above: ";
-        std::cin >> command;
-        command = format(command);
-        if (command == "ADD") 
+        std::getline(std::cin, command);
+        if (command.empty()) {
+            std::cout << "Invalid input. Please try again" <<std::endl;
+            continue;
+        }
+        command = format_command(command);
+        if (command == "ADD" or command == "1") 
             carminasPhoneBook.add();
-        else if (command == "SEARCH") 
+        else if (command == "SEARCH" or command == "2") 
             carminasPhoneBook.search();
-        else if (command == "EXIT") {
+        else if (command == "EXIT" or command == "3") {
             std::cout << "Exit min" << std::endl;
             carminasPhoneBook.exit();
             break;
