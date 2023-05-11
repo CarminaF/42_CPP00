@@ -7,10 +7,12 @@ class Contact {
     private:
         std::string firstName;
         std::string lastName;
-        std::string nickname;
+        std::string nickName;
         std::string phoneNumber;
         std::string darkestSecret;
     public:
+        // constructor
+        Contact();
         // accessors
         std::string getFirstName();
         std::string getLastName();

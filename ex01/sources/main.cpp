@@ -7,10 +7,6 @@ std::string format_command(std::string &str) {
     std::size_t start;
     std::size_t end;
 
-    if (str.empty()) {
-        std::cout<< "empty";
-        return str;
-    }
     start = str.find_first_not_of(" \t\n\r\f\v");
     if (start == std::string::npos) {
         return str;
@@ -22,14 +18,14 @@ std::string format_command(std::string &str) {
 }
 
 int main(void) {
-    std::cout << "  ________   ___  __  ________  _____  _  ____ " << std::endl;
-    std::cout << " / ___/ _ | / _ \\/  |/  /  _/ |/ / _ |( )/ __/ " << std::endl;
-    std::cout << "/ /__/ __ |/ , _/ /|_/ // //    / __ ||/_\\ \\ " << std::endl;
-    std::cout << "\\___/_/ |_/_/|_/_/ _/_/___/_/|_/_/_|_| /___/ __ _" << std::endl;
-    std::cout << "  / _ \\/ // / __ \\/ |/ / __/ _ )/ __ \\/ __ \\/ //_/" << std::endl;
-    std::cout << " / ___/ _  / /_/ /    / _// _  / /_/ / /_/ / ,<   " << std::endl;
-    std::cout << "/_/  /_//_/\\____/_/|_/___/____/\\____/\\____/_/|_|" << std::endl;
-    std::cout << std::endl;
+    std::cout << "  ________   ___  __  ________  _____  _  ____ " << std::endl
+     << " / ___/ _ | / _ \\/  |/  /  _/ |/ / _ |( )/ __/ " << std::endl
+     << "/ /__/ __ |/ , _/ /|_/ // //    / __ ||/_\\ \\ " << std::endl
+     << "\\___/_/ |_/_/|_/_/ _/_/___/_/|_/_/_|_| /___/ __ _" << std::endl
+     << "  / _ \\/ // / __ \\/ |/ / __/ _ )/ __ \\/ __ \\/ //_/" << std::endl
+     << " / ___/ _  / /_/ /    / _// _  / /_/ / /_/ / ,<   " << std::endl
+     << "/_/  /_//_/\\____/_/|_/___/____/\\____/\\____/_/|_|" << std::endl
+     << std::endl;
     while (true){ 
         std::string command;
         PhoneBook carminasPhoneBook;
@@ -43,7 +39,6 @@ int main(void) {
         std::cout << "Enter any of the commands above: ";
         std::getline(std::cin, command);
         if (command.empty()) {
-            std::cout << "Invalid input. Please try again" <<std::endl;
             continue;
         }
         command = format_command(command);
@@ -52,7 +47,7 @@ int main(void) {
         else if (command == "SEARCH" or command == "2") 
             carminasPhoneBook.search();
         else if (command == "EXIT" or command == "3") {
-            std::cout << "Exit min" << std::endl;
+            std::cout << "Exit" << std::endl;
             carminasPhoneBook.exit();
             break;
         }
