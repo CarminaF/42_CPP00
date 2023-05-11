@@ -1,65 +1,18 @@
 #include "../includes/PhoneBook.hpp"
 
+// Constructor
 PhoneBook::PhoneBook() : count(0) {}
 
+// Private Methods
 int PhoneBook::getCount() {
+    if (count > 7) {
+        count = 0;
+    }
     return count;
 }
 
 void PhoneBook::addCount() {
-    if (PhoneBook::count > 7) {
-        count = 0;
-    }
-    else
-        count++;
-}
-
-void PhoneBook::add() {
-    int i = PhoneBook::getCount();
-    std::string fName;
-    std::string lName;
-    std::string nName;
-    std::string pNumber;
-    std::string dSecret;
-
-    std::cout << "\n<<<<<<<<<<     ADDING A NEW CONTACT     >>>>>>>>>>" << std::endl;
-    while (fName.empty()) {
-        std::cout << "Enter first name: ";
-        std::getline(std::cin, fName);
-    }
-    PhoneBook::contacts[i].setFirstName(fName);
-
-    while (lName.empty()) {
-        std::cout << "Enter last name: ";
-        std::getline(std::cin, lName);
-    }
-    PhoneBook::contacts[i].setLastName(lName);
-
-    while (nName.empty()) {
-        std::cout << "Enter nickname: ";
-        std::getline(std::cin, nName);
-    }
-    PhoneBook::contacts[i].setNickname(nName);
-
-    while (pNumber.empty()) {
-        std::cout << "Enter phone number: ";
-        std::getline(std::cin, pNumber);
-    }
-    PhoneBook::contacts[i].setPhoneNumber(pNumber);
-
-    while (dSecret.empty()) {
-        std::cout << "Enter darkest secret: ";
-        std::getline(std::cin, dSecret);
-    }
-    PhoneBook::contacts[i].setDarkestSecret(dSecret);
-
-    std::cout << "\n<<<<<<<<<<  SUCCESSFULLY ADDED CONTACT  >>>>>>>>>>" << std::endl
-    << "First name: " << PhoneBook::contacts[i].getFirstName() << std::endl
-    << "Last name : " << PhoneBook::contacts[i].getLastName() << std::endl
-    << "Nickname: " << PhoneBook::contacts[i].getNickname() << std::endl
-    << "Phone number: " <<PhoneBook::contacts[i].getPhoneNumber() << std::endl;
-    PhoneBook::addCount();
-    std::cout << PhoneBook::getCount() << std::endl;
+    count++;
 }
 
 std::string PhoneBook::format_string(std::string str){
@@ -72,6 +25,7 @@ std::string PhoneBook::format_string(std::string str){
     }
     
 }
+
 void PhoneBook::displayPhoneBook(){
     int i = 0;
     std::cout << "   ___  __ ______  _  _________  ____  ____  __ __" << std::endl
@@ -91,10 +45,107 @@ void PhoneBook::displayPhoneBook(){
     }
     std::cout << "+----------+----------+----------+----------+" << std::endl;
 }
+
+void PhoneBook::displayIndexInPhoneBook(int i) {
+    i--;
+    std::cout << std::endl
+    << "First Name: " << contacts[i].getFirstName() << std::endl
+    << "Last Name: " << contacts[i].getLastName() << std::endl
+    << "Nickname: " << contacts[i].getNickname() << std::endl
+    << "Phone Number: " << contacts[i].getPhoneNumber() << std::endl;
+}
+
+
+// Public Methods
+void PhoneBook::add() {
+
+    int i = getCount();
+    size_t pNumber = 0;
+    std::string fName;
+    std::string lName;
+    std::string nName;
+    std::string dSecret;
+
+    std::cout << "\n<<<<<<<<<<     ADDING A NEW CONTACT     >>>>>>>>>>" << std::endl;
+    while (fName.empty()) {
+        std::cout << "Enter first name: ";
+        std::getline(std::cin, fName);
+    }
+    contacts[i].setFirstName(fName);
+
+    while (lName.empty()) {
+        std::cout << "Enter last name: ";
+        std::getline(std::cin, lName);
+    }
+    contacts[i].setLastName(lName);
+
+    while (nName.empty()) {
+        std::cout << "Enter nickname: ";
+        std::getline(std::cin, nName);
+    }
+    contacts[i].setNickname(nName);
+
+    while (true) {
+        std::string input;
+        std::cout << "Enter phone number: ";
+        std::cin >> input;
+        std::cin.ignore(); //clears the input buffer
+        try {
+            std::stoi(input, &pNumber);
+            if (pNumber != input.length()) {
+                throw std::invalid_argument("Please enter numerals only!");
+            }
+            break;
+        }
+        catch (const std::exception& e) {
+            std::cout << "ERROR: " << e.what() << std::endl;
+            continue;
+        }
+    }
+    contacts[i].setPhoneNumber(std::to_string(pNumber));
+
+    while (dSecret.empty()) {
+        std::cout << "Enter darkest secret: ";
+        std::getline(std::cin, dSecret);
+    }
+    contacts[i].setDarkestSecret(dSecret);
+    
+    addCount();
+    std::cout << "\n<<<<<<<<<<  SUCCESSFULLY ADDED CONTACT  >>>>>>>>>>" << std::endl
+    << "First name: " << contacts[i].getFirstName() << std::endl
+    << "Last name : " << contacts[i].getLastName() << std::endl
+    << "Nickname: " << contacts[i].getNickname() << std::endl
+    << "Phone number: " << contacts[i].getPhoneNumber() << std::endl;
+    displayPhoneBook();
+}
+
+
+
 void PhoneBook::search() {
     displayPhoneBook();
-    std::cout << "Search " << std::endl;
+    int index = -1;
+    std::string input;
+
+    while (true) {
+        std::cout << "Enter an index to view full contact details: ";
+        std::getline(std::cin, input);
+        try {
+            index = std::stoi(input);
+            if (index > 8 || index < 1 || this->contacts[index - 1].isEmpty()) {
+                throw std::out_of_range("Index is out of range. Index from 1 - 8 only.");
+            }
+            displayIndexInPhoneBook(index);
+            return;
+        }
+        catch (const std::exception& e) {
+            std::cout << "ERROR: " << e.what() << std::endl;
+            continue;
+        }
+
+    }
+
 }
+
 void PhoneBook::exit() {
     std::cout << std::endl
     << "    _________  ____  ___  _____  ______" << std::endl

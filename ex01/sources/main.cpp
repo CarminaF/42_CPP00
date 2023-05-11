@@ -18,6 +18,7 @@ std::string format_command(std::string &str) {
 }
 
 int main(void) {
+    PhoneBook carminasPhoneBook;
     std::cout << "  ________   ___  __  ________  _____  _  ____ " << std::endl
      << " / ___/ _ | / _ \\/  |/  /  _/ |/ / _ |( )/ __/ " << std::endl
      << "/ /__/ __ |/ , _/ /|_/ // //    / __ ||/_\\ \\ " << std::endl
@@ -26,9 +27,9 @@ int main(void) {
      << " / ___/ _  / /_/ /    / _// _  / /_/ / /_/ / ,<   " << std::endl
      << "/_/  /_//_/\\____/_/|_/___/____/\\____/\\____/_/|_|" << std::endl
      << std::endl;
+     
     while (true){ 
         std::string command;
-        PhoneBook carminasPhoneBook;
 
         std::cout << "************************************************" << std::endl;
         std::cout << " 1 - 'ADD'    - to add a new contact to phone book" << std::endl;
@@ -47,7 +48,6 @@ int main(void) {
         else if (command == "SEARCH" or command == "2") 
             carminasPhoneBook.search();
         else if (command == "EXIT" or command == "3") {
-            std::cout << "Exit" << std::endl;
             carminasPhoneBook.exit();
             break;
         }

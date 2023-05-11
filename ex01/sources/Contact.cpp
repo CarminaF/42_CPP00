@@ -3,6 +3,15 @@
 Contact::Contact() : firstName (""), lastName (""), nickName (""), phoneNumber(""), darkestSecret("") {
 };
 
+bool    Contact::isEmpty() {
+    if (this->firstName.empty() ||
+        this->lastName.empty() ||
+        this->nickName.empty() ||
+        this->phoneNumber.empty()) {
+            return (true);
+    }
+    return (false);
+}
 void Contact::setFirstName(std::string fName) {
     firstName = fName;
 }

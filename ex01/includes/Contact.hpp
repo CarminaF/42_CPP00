@@ -10,6 +10,7 @@ class Contact {
         std::string nickName;
         std::string phoneNumber;
         std::string darkestSecret;
+
     public:
         // constructor
         Contact();
@@ -18,6 +19,7 @@ class Contact {
         std::string getLastName();
         std::string getNickname();
         std::string getPhoneNumber();
+        bool        isEmpty();
         // mutators
         void        setFirstName(std::string fName);
         void        setLastName(std::string lName); 

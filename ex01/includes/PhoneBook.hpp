@@ -6,9 +6,10 @@ class PhoneBook {
     private:
         Contact     contacts[8];
         int         count;
-        void        displayPhoneBook();
         void        addCount();
         int         getCount();
+        void        displayPhoneBook();
+        void        displayIndexInPhoneBook(int i);
         std::string format_string(std::string str);
     public:
         PhoneBook();
