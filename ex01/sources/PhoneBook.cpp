@@ -96,12 +96,13 @@ void PhoneBook::add() {
 
     while (true) {
         std::cout << "Enter phone number: ";
-        std::cin >> pNumber;
-        std::cin.ignore(); //clears the input buffer
+        std::getline(std::cin, pNumber);
         if (!isNumeric(pNumber)) {
             std::cout << "Please enter numerals only!" << std::endl;
             continue;
         }
+        else if (pNumber.empty())
+            continue;
         else
             break;
     }
