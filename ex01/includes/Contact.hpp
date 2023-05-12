@@ -1,7 +1,7 @@
-#include <iostream>
-
 #ifndef CONTACT_HPP
 #define CONTACT_HPP
+
+#include <iostream>
 
 class Contact {
     private:
@@ -10,6 +10,7 @@ class Contact {
         std::string nickName;
         std::string phoneNumber;
         std::string darkestSecret;
+
 
     public:
         // constructor
