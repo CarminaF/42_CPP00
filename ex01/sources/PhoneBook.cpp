@@ -26,6 +26,15 @@ std::string PhoneBook::formatString(std::string str){
     
 }
 
+bool PhoneBook::isNumeric(std::string str) {
+    for (std::string::iterator i = str.begin(); i < str.end(); i++) {
+        if (!isdigit(*i)) {
+            return (false);
+        }
+    }
+    return (true);
+}
+
 void PhoneBook::displayPhoneBook(){
     int i = 0;
     std::cout << "   ___  __ ______  _  _________  ____  ____  __ __" << std::endl
@@ -60,7 +69,7 @@ void PhoneBook::displayIndexInPhoneBook(int i) {
 void PhoneBook::add() {
 
     int i = getCount();
-    size_t pNumber = 0;
+    std::string pNumber;
     std::string fName;
     std::string lName;
     std::string nName;
@@ -86,23 +95,17 @@ void PhoneBook::add() {
     contacts[i].setNickname(nName);
 
     while (true) {
-        std::string input;
         std::cout << "Enter phone number: ";
-        std::cin >> input;
+        std::cin >> pNumber;
         std::cin.ignore(); //clears the input buffer
-        try {
-            pNumber = std::stoi(input);
-            if (std::to_string(pNumber).length() != input.length()) {
-                throw std::invalid_argument("Please enter numerals only!");
-            }
-            break;
-        }
-        catch (const std::exception& e) {
-            std::cout << "ERROR: " << e.what() << std::endl;
+        if (!isNumeric(pNumber)) {
+            std::cout << "Please enter numerals only!" << std::endl;
             continue;
         }
+        else
+            break;
     }
-    contacts[i].setPhoneNumber(std::to_string(pNumber));
+    contacts[i].setPhoneNumber(pNumber);
 
     while (dSecret.empty()) {
         std::cout << "Enter darkest secret: ";

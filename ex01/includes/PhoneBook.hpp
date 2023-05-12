@@ -11,6 +11,7 @@ class PhoneBook {
         void        displayPhoneBook();
         void        displayIndexInPhoneBook(int i);
         std::string formatString(std::string str);
+        bool        isNumeric(std::string str);
     public:
         PhoneBook();
         void    add();

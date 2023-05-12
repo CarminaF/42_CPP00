@@ -12,6 +12,7 @@ class Contact {
         std::string darkestSecret;
 
 
+
     public:
         // constructor
         Contact();
