@@ -15,7 +15,7 @@ void PhoneBook::addCount() {
     count++;
 }
 
-std::string PhoneBook::formatString(std::string str){
+std::string PhoneBook::format_string(std::string str){
     if (str.length() < 10) {
         str.resize(10, ' ');
         return str.substr(0, 10);
@@ -24,15 +24,6 @@ std::string PhoneBook::formatString(std::string str){
         return str.substr(0, 9) + ".";
     }
     
-}
-
-bool PhoneBook::isNumeric(std::string str) {
-    for (std::string::iterator i = str.begin(); i < str.end(); i++) {
-        if (!isdigit(*i)) {
-            return (false);
-        }
-    }
-    return (true);
 }
 
 void PhoneBook::displayPhoneBook(){
@@ -45,10 +36,10 @@ void PhoneBook::displayPhoneBook(){
     << "|Index     |First Name|Last Name |Nickname  |" << std::endl;
     
     while (i < 8) {
-        std::cout << "|" << formatString(std::to_string(i + 1))
-        << "|" << formatString(contacts[i].getFirstName())
-        << "|" << formatString(contacts[i].getLastName())
-        << "|" << formatString(contacts[i].getNickname())
+        std::cout << "|" << format_string(std::to_string(i + 1))
+        << "|" << format_string(contacts[i].getFirstName())
+        << "|" << format_string(contacts[i].getLastName())
+        << "|" << format_string(contacts[i].getNickname())
         << "|" << std::endl;
         i++;
     }
@@ -69,7 +60,7 @@ void PhoneBook::displayIndexInPhoneBook(int i) {
 void PhoneBook::add() {
 
     int i = getCount();
-    std::string pNumber;
+    size_t pNumber = 0;
     std::string fName;
     std::string lName;
     std::string nName;
@@ -95,18 +86,23 @@ void PhoneBook::add() {
     contacts[i].setNickname(nName);
 
     while (true) {
+        std::string input;
         std::cout << "Enter phone number: ";
-        std::getline(std::cin, pNumber);
-        if (!isNumeric(pNumber)) {
-            std::cout << "Please enter numerals only!" << std::endl;
+        std::cin >> input;
+        std::cin.ignore(); //clears the input buffer
+        try {
+            std::stoi(input, &pNumber);
+            if (pNumber != input.length()) {
+                throw std::invalid_argument("Please enter numerals only!");
+            }
+            break;
+        }
+        catch (const std::exception& e) {
+            std::cout << "ERROR: " << e.what() << std::endl;
             continue;
         }
-        else if (pNumber.empty())
-            continue;
-        else
-            break;
     }
-    contacts[i].setPhoneNumber(pNumber);
+    contacts[i].setPhoneNumber(std::to_string(pNumber));
 
     while (dSecret.empty()) {
         std::cout << "Enter darkest secret: ";
@@ -136,7 +132,7 @@ void PhoneBook::search() {
         try {
             index = std::stoi(input);
             if (index > 8 || index < 1 || this->contacts[index - 1].isEmpty()) {
-                throw std::out_of_range("Index is out of range.");
+                throw std::out_of_range("Index is out of range. Index from 1 - 8 only.");
             }
             displayIndexInPhoneBook(index);
             return;
